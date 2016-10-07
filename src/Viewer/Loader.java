@@ -6,6 +6,19 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Loader {
+	public byte[] getDataImages() {
+		return dataImages;
+	}
+	public void setDataImages(byte[] dataImages) {
+		this.dataImages = dataImages;
+	}
+	public byte[] getDataLabels() {
+		return dataLabels;
+	}
+	public void setDataLabels(byte[] dataLabels) {
+		this.dataLabels = dataLabels;
+	}
+	
 	private byte[] dataImages;
 	private byte[] dataLabels;
 	
