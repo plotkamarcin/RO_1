@@ -19,16 +19,11 @@ public class ImageViewer {
 		// TODO Auto-generated method stub
 		Loader loader = new Loader();
 		loader.loadSet();
-		System.out.println("Podaj nr pozycji");
-		Scanner in = new Scanner(System.in);
-		String a = in.next();
-		while(true){
-		loader.showNumber(Integer.parseInt(a));
-		System.out.println("\nPodaj nr pozycji");
-		a=in.next();
-		}
-       
+		ImageViewerGui iw = new ImageViewerGui(loader);
+        iw.setVisible(true);
+        loader.showNumber(23);
 	}
+
 
 
 }

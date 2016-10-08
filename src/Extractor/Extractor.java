@@ -15,6 +15,6 @@ public static void main(String[] args) {
         FeatureProcessor processor= new FeatureProcessor(loader);
         processor.calculateFeatures();
         Output writer = new Output();
-        writer.saveToFile("E:\\ro\\Features.txt",processor);
+        writer.saveToFile("E:\\ro\\Features1.txt",processor);
 }
 }

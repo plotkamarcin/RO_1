@@ -86,4 +86,14 @@ public class Loader {
 			e2.printStackTrace();
 		}		
 	}
+	public int[] getImageWithIndex(int index){
+		int [] temp= new int[28*28];
+		for (int i=0;i<27*27;i++){
+			temp[i]=dataImages[(i+16)+(28*28)*(index-1)]&0xff;
+		}
+		return temp;
+	}
+	public int getImageLabelWithIndex(int index){
+		return dataLabels[index+7];
+	}
 }
