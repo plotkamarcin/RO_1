@@ -2,23 +2,24 @@ package Extractor;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 
 public class Output {
 
 	
 	public void saveToFile(String name, FeatureProcessor fp){
-	    PrintWriter pw;
-		try {
-			pw = new PrintWriter(new FileOutputStream(name));
-		    for (String s : fp.firstFeatureVector)
-		        pw.println(s);
-		    pw.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		
-
-		}
+	      try {
+	          FileOutputStream fileOut =
+	          new FileOutputStream(name);
+	          ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	          out.writeObject(fp.getImages());
+	          out.close();
+	          fileOut.close();
+	          System.out.printf("Serialized data is saved in "+name);
+	       }catch(IOException i) {
+	          i.printStackTrace();
+	       }
 	}
 }

@@ -53,9 +53,9 @@ public class Loader {
 		
 		System.out.print("Etykieta to: " + dataLabels[pos+7]);
 	}
-	public void loadSet() {
+	public void loadSet(String name) {
 
-		File file1 = new File("E:\\ro\\train-images.idx3-ubyte");
+		File file1 = new File("E:\\ro\\"+name+".idx3-ubyte");
 		int size1 = (int) file1.length();
 		dataImages=new byte[size1];
 		FileInputStream in1;
@@ -70,7 +70,7 @@ public class Loader {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}	
-		File file2 = new File("E:\\ro\\train-labels.idx1-ubyte");
+		File file2 = new File("E:\\ro\\"+name+".idx1-ubyte");
 		int size2 = (int) file2.length();
 		dataLabels=new byte[size2];
 		FileInputStream in2;
