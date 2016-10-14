@@ -17,7 +17,7 @@ public class Output {
 	          out.writeObject(fp.getImages());
 	          out.close();
 	          fileOut.close();
-	          System.out.printf("Serialized data is saved in "+name);
+	          System.out.println("Serialized data is saved in "+name);
 	       }catch(IOException i) {
 	          i.printStackTrace();
 	       }

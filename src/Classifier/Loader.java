@@ -9,29 +9,30 @@ import Extractor.Image;
 
 public class Loader {
 	
-	private ArrayList<Image> images=null;
 	
 	Loader(){
 		
 	}
 	
-	public void loadData(String name){
+	public ArrayList<Image> loadData(String name){
 	
+		ArrayList<Image>images=null;
 		 try {
 	         FileInputStream fileIn = new FileInputStream(name);
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
 	         images = (ArrayList<Image>) in.readObject();
 	         in.close();
 	         fileIn.close();
-	         System.out.println("Image Data Loaded");
+	         System.out.println("Image Data Loaded from "+name);
 	      }catch(IOException i) {
 	         i.printStackTrace();
-	         return;
+	         
 	      }catch(ClassNotFoundException c) {
 	         System.out.println("Image Data not found");
 	         c.printStackTrace();
-	         return;
+	         
 	      }
+		 return images;
 	}
 
 }

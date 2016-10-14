@@ -7,31 +7,39 @@ public class Image implements Serializable {
 	private static final long serialVersionUID = 4623746839237756244L;
 	
 private int imageId;
-private int feature1;
-private int feature2;
-private int feature3;
+private double feature1;
+private double feature2;
+private double feature3;
 
-public int getFeature1() {
+public int getImageId() {
+	return imageId;
+}
+
+public void setImageId(int imageId) {
+	this.imageId = imageId;
+}
+
+public double getFeature1() {
 	return feature1;
 }
 
-public void setFeature1(int feature1) {
+public void setFeature1(double feature1) {
 	this.feature1 = feature1;
 }
 
-public int getFeature2() {
+public double getFeature2() {
 	return feature2;
 }
 
-public void setFeature2(int feature2) {
+public void setFeature2(double feature2) {
 	this.feature2 = feature2;
 }
 
-public int getFeature3() {
+public double getFeature3() {
 	return feature3;
 }
 
-public void setFeature3(int feature3) {
+public void setFeature3(double feature3) {
 	this.feature3 = feature3;
 }
 
@@ -43,7 +51,7 @@ Image(int[] image, int size, int label){
 	imageId= label;
 }
 
-public int calculateFirstFeature(){
+public double calculateFirstFeature(){
 int tmp=0;
 for(int i=0;i<imageTable.length;i++){
 	if(imageTable[i]>0){
