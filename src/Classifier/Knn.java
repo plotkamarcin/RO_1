@@ -223,15 +223,18 @@ public class Knn {
 		for(Result r:finalResults){
 			Integer.toString(confusionMatrix[r.getOriginalLabel()][r.getClassifiedLabel()]++);
 		}
+		
 		System.out.print("  ");
 		for(int i=0;i<10;i++){
-			System.out.print(Integer.toString(i)+"   ");
+			System.out.print(Integer.toString(i)+"\t");
 		}
 		System.out.println(" ");
+		
+		
 		for(int i=0;i<10;i++){
 			System.out.print(i+" ");
 			for(int j=0;j<10;j++){
-				System.out.print(Integer.toString(confusionMatrix[i][j])+"   ");
+				System.out.print(Integer.toString(confusionMatrix[i][j])+"\t");
 			}
 			System.out.println(" ");
 		}

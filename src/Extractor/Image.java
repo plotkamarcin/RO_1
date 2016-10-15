@@ -10,6 +10,15 @@ private int imageId;
 private double feature1;
 private double feature2;
 private double feature3;
+private transient int[] imageTable;
+
+public int[] getImageTable() {
+	return imageTable;
+}
+
+public void setImageTable(int[] imageTable) {
+	this.imageTable = imageTable;
+}
 
 public int getImageId() {
 	return imageId;
@@ -43,7 +52,6 @@ public void setFeature3(double feature3) {
 	this.feature3 = feature3;
 }
 
-private transient int[] imageTable;
 
 Image(int[] image, int size, int label){
 	imageTable= new int[size*size];

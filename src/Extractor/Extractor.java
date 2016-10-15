@@ -30,5 +30,6 @@ public static void main(String[] args) {
         starProcessor.calculateFeatures();
         Output writerStarTrain = new Output();
         writerStarTrain.saveToFile("train_starImages.ser",starProcessor);
+        starProcessor.showImage(0);
 }
 }
