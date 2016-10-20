@@ -69,18 +69,36 @@ Image(int[] image, int size, int label){
 }
 
 public double calculateFirstFeature(){
-	//pole cyfry
-int tmp=0;
+	//srodek ciezkosci cyfry reprezentowany jako wektor i wyznaczamy jego k¹t do OX
+int area=0;
 for(int i=0;i<imageTable.length;i++){
 	if(imageTable[i]>0){
-		tmp++;
+		area++;
 	}
 }
-return tmp;
+double xPrime=0.0;
+double yPrime=0.0;
+
+for(int i=0;i<imageTable.length;i++){
+	if(imageTable[i]>0){
+		xPrime+=i;
+	}
+}
+for(int i=0;i<27;i++){
+	for(int j=0;j<27;j++){
+			if(imageTable[j*27+i]>0){
+		yPrime+=i;
+	}
+	}
+
+}
+xPrime=xPrime/area;
+yPrime=yPrime/area;
+return Math.atan2(xPrime, yPrime);
 }
 public double calculateSecondFeature(){
 	
-	//operatory sobela
+	//operatory sobela, wyznaczamy cyfre jako k¹t wektora gradientu do osi OX
 	int[] sobelH = {-1,0,1,-2,0,2,-1,0,1};
 	int[] sobelV = {-1,-2,-1,0,0,0,1,2,1};
 	
@@ -110,7 +128,7 @@ public double calculateSecondFeature(){
 	
 	avgX/=(28*28);
 	avgY/=(28*28);
-	return Math.atan(avgY/avgX);
+	return Math.atan2(avgX,avgY);
 }
 public double calculateThirdFeature(){
 	// srednia g³êbokoœæ X

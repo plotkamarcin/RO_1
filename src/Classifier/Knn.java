@@ -71,70 +71,49 @@ public class Knn {
 		findDominantClass(objectIndex);
 	}
 
-	public void calculateMinkovskyDistances() {
-
-		double index = 0.0;
-		for (Image i : testData) {
-			ArrayList<DistanceMetric> tmp = new ArrayList<>();
-
-			double mDistance = 0.0;
-			for (int j = 0; j < trainData.size(); j++) {
-				mDistance = Math.pow(Math.pow(i.getFeature1() - testData.get(j).getFeature1(), 3.0)
-						+ Math.pow(i.getFeature2() - testData.get(j).getFeature2(), 3.0)
-						+ Math.pow(i.getFeature3() - testData.get(j).getFeature3(), 3.0), 0.3333);
-				tmp.add(new DistanceMetric(mDistance, trainData.get(j).getImageId()));
-			}
-
-			DecimalFormat formatter = new DecimalFormat("#0.000");
-			System.out.println(formatter.format(((index++) / testData.size()) * 100) + "%");
-			// this.minkovskyDistances.add(tmp);
-
+	public void calculateMinkovskyDistances(int objectIndex, int numberOfNeighbours) {
+		ArrayList<DistanceMetric> tmpMinkovsky = new ArrayList<>();
+		double mDistance = 0.0;
+		for (int j = 0; j < trainData.size(); j++) {
+			mDistance = Math.pow(Math.pow(Math.abs(testData.get(objectIndex).getFeature1() - trainData.get(j).getFeature1()), 3.0)
+					+ Math.pow(Math.abs(testData.get(objectIndex).getFeature2() - trainData.get(j).getFeature2()), 3.0)
+					+ Math.pow(Math.abs(testData.get(objectIndex).getFeature3() - trainData.get(j).getFeature3()), 3.0)
+					+ Math.pow(Math.abs(testData.get(objectIndex).getFeature4()- trainData.get(j).getFeature4()), 3.0),0.3333);
+			tmpMinkovsky.add(new DistanceMetric(mDistance, trainData.get(j).getImageId()));
 		}
+
+		findNNearestNeighbours(numberOfNeighbours, tmpMinkovsky);
+		findDominantClass(objectIndex);
+				
 	}
 
-	public void calculateChebyshevDistances() {
-
-		double index = 0.0;
-		for (Image i : testData) {
-			ArrayList<DistanceMetric> tmp = new ArrayList<>();
-
-			double cDistance = 0.0;
-
-			for (int j = 0; j < trainData.size(); j++) {
-				cDistance = Math.max(
-						Math.max(i.getFeature1() - testData.get(j).getFeature1(),
-								i.getFeature2() - testData.get(j).getFeature2()),
-						i.getFeature3() - testData.get(j).getFeature3());
-				tmp.add(new DistanceMetric(cDistance, trainData.get(j).getImageId()));
-			}
-
-			DecimalFormat formatter = new DecimalFormat("#0.000");
-			System.out.println(formatter.format(((index++) / testData.size()) * 100) + "%");
-			// this.chebyshevDistances.add(tmp);
-
+	public void calculateChebyshevDistances(int objectIndex, int numberOfNeighbours) {
+		ArrayList<DistanceMetric> tmpChebyshev = new ArrayList<>();
+		double cDistance = 0.0;
+		for (int j = 0; j < trainData.size(); j++) {
+			
+			cDistance = Math.abs(Math.max(testData.get(objectIndex).getFeature1() - trainData.get(objectIndex).getFeature1(),Math.max(testData.get(objectIndex).getFeature2() - trainData.get(j).getFeature2(), Math.max(testData.get(objectIndex).getFeature3() - trainData.get(j).getFeature3(), testData.get(objectIndex).getFeature4() - trainData.get(j).getFeature4()))));
+						tmpChebyshev.add(new DistanceMetric(cDistance, trainData.get(j).getImageId()));
 		}
-	}
 
-	public void calculateTaxiDistances() {
+		findNNearestNeighbours(numberOfNeighbours, tmpChebyshev);
+		findDominantClass(objectIndex);
 
-		double index = 0.0;
-		for (Image i : testData) {
-			ArrayList<DistanceMetric> tmp = new ArrayList<>();
+}
 
-			double tDistance = 0.0;
+	public void calculateTaxiDistances(int objectIndex, int numberOfNeighbours) {
 
+		ArrayList<DistanceMetric> tmpTaxi = new ArrayList<>();
+		double tDistance = 0.0;
 			for (int j = 0; j < trainData.size(); j++) {
-				tDistance = Math.abs(i.getFeature1() - testData.get(j).getFeature1())
-						+ Math.abs(i.getFeature2() - testData.get(j).getFeature2())
-						+ Math.abs(i.getFeature3() - testData.get(j).getFeature3());
-				tmp.add(new DistanceMetric(tDistance, trainData.get(j).getImageId()));
+				tDistance = Math.abs(testData.get(objectIndex).getFeature1() - trainData.get(j).getFeature1())
+						+ Math.abs(testData.get(objectIndex).getFeature2() - trainData.get(j).getFeature2())
+						+ Math.abs(testData.get(objectIndex).getFeature3() - trainData.get(j).getFeature3())
+						+ Math.abs(testData.get(objectIndex).getFeature4() - trainData.get(j).getFeature4()) ;
+				tmpTaxi.add(new DistanceMetric(tDistance, trainData.get(j).getImageId()));
 			}
-
-			DecimalFormat formatter = new DecimalFormat("#0.000");
-			System.out.println(formatter.format(((index++) / testData.size()) * 100) + "%");
-			// this.taxiDistances.add(tmp);
-
-		}
+			findNNearestNeighbours(numberOfNeighbours, tmpTaxi);
+			findDominantClass(objectIndex);
 	}
 
 	private void findNNearestNeighbours(int numberOfNeighbours, ArrayList<DistanceMetric> list) {
@@ -217,7 +196,7 @@ public class Knn {
 	}
 
 	public void showConfusionMatrix() {
-		confusionMatrix = new int[10][10];
+		confusionMatrix = new int[11][11];
 		
 		System.out.println("\n ");
 		
@@ -225,24 +204,44 @@ public class Knn {
 			Integer.toString(confusionMatrix[r.getOriginalLabel()][r.getClassifiedLabel()]++);
 		}
 		
-		System.out.print("  ");
+		System.out.print("\t");
 		for(int i=0;i<10;i++){
 			System.out.print(Integer.toString(i)+"\t");
 		}
+		System.out.print("Sum");
 		System.out.println(" ");
 		
+		for(int i=0;i<10;i++){
+			for(int j=0;j<10;j++){
+				if(i!=j){
+					confusionMatrix[i][10]+=confusionMatrix[i][j];
+				}
+			}
+		}
 		
 		for(int i=0;i<10;i++){
-			System.out.print(i+" ");
 			for(int j=0;j<10;j++){
+				if(i!=j){
+					confusionMatrix[10][j]+=confusionMatrix[i][j];
+				}
+			}
+		}
+		for(int i=0;i<10;i++){
+			System.out.print(i+"\t");
+			for(int j=0;j<11;j++){
 				System.out.print(Integer.toString(confusionMatrix[i][j])+"\t");
 			}
 			System.out.println(" ");
+		}
+		System.out.print("Sum\t");
+		for(int i=0;i<10;i++){
+			System.out.print(Integer.toString(confusionMatrix[10][i])+"\t");
 		}
 		double efficiency=0.0;
 			for(int j=0;j<10;j++){
 				efficiency+=confusionMatrix[j][j];
 			}
+			System.out.println("\n\n ");
 			DecimalFormat formatter = new DecimalFormat("#0.000");
 		System.out.println("Efficiency: "+formatter.format((efficiency/testData.size()*100))+" %");
         
