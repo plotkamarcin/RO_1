@@ -14,10 +14,10 @@ public class Classifier {
 	public static void main(String[] args) {
 		ArrayList<Image> trainData = new Loader().loadData("train_image_data.ser");
 		ArrayList<Image> testData = new Loader().loadData("test_image_data.ser");
-		ArrayList<Image> starTrainData=new Loader().loadData("train_starImages.ser");
+		//ArrayList<Image> starTrainData=new Loader().loadData("train_starImages.ser");
 		Knn classifier = new Knn(testData, trainData);
 		for (int i = 0; i < testData.size(); i++) {
-			classifier.calculateEuclideanDistances(i, 10);
+			classifier.calculateEuclideanDistances(i, 100);
 		}
 		classifier.showConfusionMatrix();
 		System.out.println("");

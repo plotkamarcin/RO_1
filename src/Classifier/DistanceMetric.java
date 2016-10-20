@@ -1,5 +1,7 @@
 package Classifier;
 
+import java.util.Comparator;
+
 public class DistanceMetric {
 
 	private double MetricValue;
@@ -25,10 +27,13 @@ public class DistanceMetric {
 
 	private int Label;
 
-	
+	public DistanceMetric(){
+		
+	}
 	public DistanceMetric(double value, int label){
         this.MetricValue=value;
         this.Label=label;
 	}
+
 	
 }

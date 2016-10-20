@@ -18,6 +18,7 @@ import Viewer.StarLoader;
 public class FeatureProcessor {
 
 	private ArrayList<Image> images;
+	private ArrayList<StarImage> starImages;
 	
 
 	public ArrayList<Image> getImages() {
@@ -38,7 +39,7 @@ public class FeatureProcessor {
 		}
 	}
 	public FeatureProcessor(StarLoader loader){
-		images = new ArrayList<Image>();
+		starImages = new ArrayList<StarImage>();
 		
 		int index=0;
 		
@@ -49,7 +50,7 @@ public class FeatureProcessor {
 			for(int i=0;i<pixels.length;i++){
 				tmp[i]=pixels[i]&0xff;
 			}
-			images.add(new Image(tmp,256,index/25));
+			starImages.add(new StarImage(tmp,256,index/25));
 			index++;
 		}
 
@@ -57,11 +58,21 @@ public class FeatureProcessor {
 	public void calculateFeatures() {
 		for(Image i:images){
 			i.setFeature1(i.calculateFirstFeature());
+			i.setFeature2(i.calculateSecondFeature());
+			i.setFeature3(i.calculateThirdFeature());
+			i.setFeature4(i.calculateFourthFeature());
 		}		
 	}
+	public void calculateStarFeatures(){
+		for(StarImage i:starImages){
+			i.setFeature1(i.calculateFirstFeature());
+			i.setFeature2(i.calculateSecondFeature());
+			i.setFeature3(i.calculateThirdFeature());
+		}
+	}
 	public void showImage(int pos){
-		BufferedImage img = new BufferedImage(256, 256, BufferedImage.TYPE_BYTE_INDEXED);
-		img.setRGB(0, 0,256,256,images.get(pos).getImageTable(),0,256);
+		BufferedImage img = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
+		img.setRGB(0, 0,256,256,starImages.get(pos).getImageTable(),0,256);
 		JFrame frame = new JFrame();
 		frame.getContentPane().setLayout(new FlowLayout());
 		frame.getContentPane().add(new JLabel(new ImageIcon(img)));

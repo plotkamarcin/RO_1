@@ -61,7 +61,8 @@ public class Knn {
 			eDistance = Math.pow(
 					Math.pow(testData.get(objectIndex).getFeature1() - trainData.get(j).getFeature1(), 2.0)
 							+ Math.pow(testData.get(objectIndex).getFeature2() - trainData.get(j).getFeature2(), 2.0)
-							+ Math.pow(testData.get(objectIndex).getFeature3() - trainData.get(j).getFeature3(), 2.0),
+							+ Math.pow(testData.get(objectIndex).getFeature3() - trainData.get(j).getFeature3(), 2.0)
+							+ Math.pow(testData.get(objectIndex).getFeature4() - trainData.get(j).getFeature4(), 2.0),
 					0.5);
 			tmpEuclid.add(new DistanceMetric(eDistance, trainData.get(j).getImageId()));
 		}
@@ -185,7 +186,7 @@ public class Knn {
 				}
 			}
 			// System.out.println("one majority class, index is: "+index);
-			System.out.println("Dominant label is " + uniqueValues[0] + " with " + max + " occurences");
+			System.out.println("Dominant label is " + uniqueValues[index] + " with " + max + " occurences");
 			System.out.println("original label: "+testData.get(objectIndex).getImageId());
 			finalResults.add(new Result(testData.get(objectIndex).getImageId(),Integer.parseInt(uniqueValues[index])));
 		} else {// we have multiple modes
