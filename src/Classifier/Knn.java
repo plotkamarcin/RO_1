@@ -1,4 +1,4 @@
-package Classifier;
+package classifier;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 
-import Extractor.Image;
+import extractor.Image;
 
 public class Knn {
 

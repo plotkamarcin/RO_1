@@ -1,4 +1,4 @@
-package Classifier;
+package classifier;
 
 import java.util.Comparator;
 

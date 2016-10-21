@@ -1,4 +1,4 @@
-package Extractors;
+package featrueExtractors;
 public class SobelEdgeExtractor {
 
 	int[] input;

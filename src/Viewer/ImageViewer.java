@@ -1,4 +1,4 @@
-package Viewer;
+package viewer;
 
 import java.awt.event.KeyEvent;
 import java.io.Console;

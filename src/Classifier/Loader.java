@@ -1,11 +1,11 @@
-package Classifier;
+package classifier;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
-import Extractor.Image;
+import extractor.Image;
 
 public class Loader {
 	

@@ -1,4 +1,4 @@
-package Extractor;
+package extractor;
 
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
@@ -12,8 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import Viewer.Loader;
-import Viewer.StarLoader;
+import viewer.*;
 
 public class FeatureProcessor {
 

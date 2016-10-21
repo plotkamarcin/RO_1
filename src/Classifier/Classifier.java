@@ -1,10 +1,10 @@
-package Classifier;
+package classifier;
 
 import java.util.ArrayList;
 
-import Extractor.FeatureProcessor;
-import Extractor.Image;
-import Extractor.Output;
+import extractor.FeatureProcessor;
+import extractor.Image;
+import extractor.Output;
 
 public class Classifier {
 

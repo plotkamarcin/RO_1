@@ -1,4 +1,4 @@
-package Extractor;
+package extractor;
 
 import java.io.Serializable;
 
@@ -69,7 +69,8 @@ Image(int[] image, int size, int label){
 }
 
 public double calculateFirstFeature(){
-	//srodek ciezkosci cyfry reprezentowany jako wektor i wyznaczamy jego k¹t do OX
+	//srodek ciezkosci cyfry reprezentowany jako wektor i wyznaczamy jego d³ugoœæ
+	
 int area=0;
 for(int i=0;i<imageTable.length;i++){
 	if(imageTable[i]>0){
@@ -94,7 +95,8 @@ for(int i=0;i<27;i++){
 }
 xPrime=xPrime/area;
 yPrime=yPrime/area;
-return Math.atan2(xPrime, yPrime);
+return Math.pow((xPrime*xPrime+yPrime*yPrime), 0.5);
+
 }
 public double calculateSecondFeature(){
 	
@@ -131,43 +133,32 @@ public double calculateSecondFeature(){
 	return Math.atan2(avgX,avgY);
 }
 public double calculateThirdFeature(){
-	// srednia g³êbokoœæ X
-	double depthX=0.0;
-	double[] temp=new double[28];
-	
-	for(int i=0;i<28;i++){
-		for(int j=0;j<28;j++){
-			if(imageTable[28*i+j]>0){
-				temp[i]+=1;
-			}
-		}
+	//moment centralny M11
+	double[]tmp= new double[28*28] ;
+	for(int i=0;i<imageTable.length;i++){
+		tmp[i]= normalize(imageTable[i]);
 	}
-	
-	for(int i=0;i<28;i++){
-		depthX+=temp[i];
-	}
-	return depthX/28;
+	double m00 = calculateMomentum(0, 0, tmp);
+	double m01 = calculateMomentum(0, 1, tmp);
+	double m10 = calculateMomentum(1, 0, tmp);
+	double m11 = calculateMomentum(1, 1, tmp);
+	return m11-(m10/m00)*m01;
 }
 
 public double calculateFourthFeature(){
-	//srednia glebokosc Y
-	double depthY=0.0;
-	double[] temp=new double[28];
-	
-	for(int i=0;i<28;i++){
-		for(int j=0;j<28;j++){
-			if(imageTable[28*j+i]>0){
-				temp[i]+=1;
-			}
-		}
+	//moment geometryczny M30
+	double[]tmp= new double[28*28] ;
+	for(int i=0;i<imageTable.length;i++){
+		tmp[i]= normalize(imageTable[i]);
 	}
-	
-	for(int i=0;i<28;i++){
-		depthY+=temp[i];
-	}
-	return depthY/28;
+	double m00 = calculateMomentum(0, 0, tmp);
+	double m10 = calculateMomentum(1, 0, tmp);
+	double m20 = calculateMomentum(2, 0, tmp);
+	double m30 = calculateMomentum(3, 0, tmp);
+	return m30-3*m20*(m10/m00)+2*m10*Math.pow((m10/m00), 2.0);
 }
-private double calculateMomentum(int p, int q, int[] tab){
+
+protected double calculateMomentum(int p, int q, double[] tab){
 	double sum=0.0;
 	for(int i=0;i<28;i++){
 		for(int j=0;j<28;j++){
@@ -175,5 +166,8 @@ private double calculateMomentum(int p, int q, int[] tab){
 		}
 	}
 	return sum;
+}
+protected double normalize(double value){
+	return (value-0)/255.0;
 }
 }

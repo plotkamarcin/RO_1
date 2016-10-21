@@ -1,11 +1,7 @@
-package Extractor;
+package extractor;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import Extractors.*;
-import Viewer.Loader;
-import Viewer.StarLoader;
+import featrueExtractors.*;
+import viewer.*;
 
 public class Extractor {
 

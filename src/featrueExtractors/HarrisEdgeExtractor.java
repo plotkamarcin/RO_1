@@ -1,4 +1,4 @@
-package Extractors;
+package featrueExtractors;
 
 import java.awt.*;
 import java.awt.image.*;
