@@ -21,6 +21,12 @@ public class FeatureProcessor {
 	private ArrayList<StarImage> starImages;
 	
 
+	public ArrayList<StarImage> getStarImages() {
+		return starImages;
+	}
+	public void setStarImages(ArrayList<StarImage> starImages) {
+		this.starImages = starImages;
+	}
 	public ArrayList<Image> getImages() {
 		return images;
 	}
@@ -70,9 +76,9 @@ public class FeatureProcessor {
 			i.setFeature3(i.calculateThirdFeature());
 		}
 	}
-	public void showImage(int pos){
+	public void showImage(int []src){
 		BufferedImage img = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
-		img.setRGB(0, 0,256,256,starImages.get(pos).getImageTable(),0,256);
+		img.setRGB(0, 0,256,256,src,0,256);
 		JFrame frame = new JFrame();
 		frame.getContentPane().setLayout(new FlowLayout());
 		frame.getContentPane().add(new JLabel(new ImageIcon(img)));

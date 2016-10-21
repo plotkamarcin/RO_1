@@ -3,6 +3,7 @@ package Extractor;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import Extractors.*;
 import Viewer.Loader;
 import Viewer.StarLoader;
 
@@ -30,7 +31,7 @@ public static void main(String[] args) {
         starProcessor.calculateStarFeatures();
         Output writerStarTrain = new Output();
         writerStarTrain.saveToFile("train_starImages.ser",starProcessor);
-        starProcessor.showImage(0);
+        starProcessor.showImage(starProcessor.getStarImages().get(0).getImageTable());
         
         StarLoader starPlainSet = new StarLoader();
         starPlainSet.loadSet("E:\\ro\\STaR_database\\test_plain\\");
@@ -38,7 +39,19 @@ public static void main(String[] args) {
         starProcessor.calculateStarFeatures();
         Output writerStarPlainSet = new Output();
         writerStarPlainSet.saveToFile("plain_starImages.ser",starPlainProcessor);
-        starPlainProcessor.showImage(0);
-
+        starPlainProcessor.showImage(starPlainProcessor.getStarImages().get(15).getImageTable());
+        
+        HarrisEdgeExtractor harris = new HarrisEdgeExtractor();
+        SobelEdgeExtractor sobel = new SobelEdgeExtractor();
+        int temp[] = new int[256*256];
+        temp=starPlainProcessor.getStarImages().get(15).getImageTable();
+        harris.init(temp, 256, 256, 0.12);
+        sobel.init(temp, 256, 256);
+        int result1[]=harris.process();
+        int result2[]=sobel.process();
+        result2=sobel.threshold(result2, 50);
+        starPlainProcessor.showImage(result1);
+        starPlainProcessor.showImage(result2);
+        int res = harris.getProgress();
 }
 }
