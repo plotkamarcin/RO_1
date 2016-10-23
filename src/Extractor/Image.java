@@ -1,6 +1,13 @@
 package extractor;
 
+import java.awt.FlowLayout;
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
+import java.util.Scanner;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class Image implements Serializable {
 	
@@ -120,17 +127,25 @@ public double calculateSecondFeature(){
 				+imageTable[(28*j+i)+27]*sobelV[6]+imageTable[(28*j+i)+28]*sobelV[7]+imageTable[(28*j+i)+29]*sobelV[8])/9;
 	}
 	}
-	double avgX=0.0;
-	double avgY=0.0;
-	
-	for(int i=0;i<28*28;i++){
-		avgX+=tempH[i];
-		avgY+=tempV[i];
+
+	double[] vectors = new double[28*28];
+	double avgLength=0.0;
+	for (int i=0;i<vectors.length;i++){
+		vectors[i]=Math.pow((tempH[i]*tempH[i]+tempV[i]+tempV[i]), 0.5);
+		avgLength+=vectors[i];
 	}
 	
-	avgX/=(28*28);
-	avgY/=(28*28);
-	return Math.atan2(avgX,avgY);
+	double[]angles=new double[28*28];
+	double avgAngle=0.0;
+	double count=0.0;
+	for (int i=0;i<angles.length;i++){
+		angles[i]=Math.atan2(tempH[i],tempV[i]);
+		avgAngle+=angles[i];
+		if(angles[i]>0){
+			count++;
+		}
+	}
+	return avgAngle/count;
 }
 public double calculateThirdFeature(){
 	//moment centralny M11

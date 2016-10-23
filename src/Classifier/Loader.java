@@ -14,13 +14,13 @@ public class Loader {
 		
 	}
 	
-	public ArrayList<Image> loadData(String name){
+	public <T> ArrayList<T> loadData(String name){
 	
-		ArrayList<Image>images=null;
+		ArrayList<T>images=null;
 		 try {
 	         FileInputStream fileIn = new FileInputStream(name);
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
-	         images = (ArrayList<Image>) in.readObject();
+	         images = (ArrayList<T>) in.readObject();
 	         in.close();
 	         fileIn.close();
 	         System.out.println("Image Data Loaded from "+name);

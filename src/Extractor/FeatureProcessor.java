@@ -73,6 +73,7 @@ public class FeatureProcessor {
 			i.setFeature1(i.calculateFirstFeature());
 			i.setFeature2(i.calculateSecondFeature());
 			i.setFeature3(i.calculateThirdFeature());
+			i.setFeature4(i.calculateFourthFeature());
 		}
 	}
 	public void showImage(int []src){
