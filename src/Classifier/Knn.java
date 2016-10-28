@@ -62,8 +62,9 @@ public class Knn {
 					Math.pow(testData.get(objectIndex).getFeature1() - trainData.get(j).getFeature1(), 2.0)
 							+ Math.pow(testData.get(objectIndex).getFeature2() - trainData.get(j).getFeature2(), 2.0)
 							+ Math.pow(testData.get(objectIndex).getFeature3() - trainData.get(j).getFeature3(), 2.0)
-							+ Math.pow(testData.get(objectIndex).getFeature4() - trainData.get(j).getFeature4(), 2.0),
-					0.5);
+							+ Math.pow(testData.get(objectIndex).getFeature4() - trainData.get(j).getFeature4(), 2.0)
+							+ Math.pow(testData.get(objectIndex).getFeature5() - trainData.get(j).getFeature5(), 2.0)
+							,0.5);
 			tmpEuclid.add(new DistanceMetric(eDistance, trainData.get(j).getImageId()));
 		}
 
@@ -78,7 +79,9 @@ public class Knn {
 			mDistance = Math.pow(Math.pow(Math.abs(testData.get(objectIndex).getFeature1() - trainData.get(j).getFeature1()), 3.0)
 					+ Math.pow(Math.abs(testData.get(objectIndex).getFeature2() - trainData.get(j).getFeature2()), 3.0)
 					+ Math.pow(Math.abs(testData.get(objectIndex).getFeature3() - trainData.get(j).getFeature3()), 3.0)
-					+ Math.pow(Math.abs(testData.get(objectIndex).getFeature4()- trainData.get(j).getFeature4()), 3.0),0.3333);
+					+ Math.pow(Math.abs(testData.get(objectIndex).getFeature4()- trainData.get(j).getFeature4()), 3.0)
+					+ Math.pow(Math.abs(testData.get(objectIndex).getFeature5()- trainData.get(j).getFeature5()), 3.0)
+					,0.3333);
 			tmpMinkovsky.add(new DistanceMetric(mDistance, trainData.get(j).getImageId()));
 		}
 
@@ -92,7 +95,11 @@ public class Knn {
 		double cDistance = 0.0;
 		for (int j = 0; j < trainData.size(); j++) {
 			
-			cDistance = Math.abs(Math.max(testData.get(objectIndex).getFeature1() - trainData.get(objectIndex).getFeature1(),Math.max(testData.get(objectIndex).getFeature2() - trainData.get(j).getFeature2(), Math.max(testData.get(objectIndex).getFeature3() - trainData.get(j).getFeature3(), testData.get(objectIndex).getFeature4() - trainData.get(j).getFeature4()))));
+			cDistance = Math.abs(Math.max(
+					testData.get(objectIndex).getFeature1() - trainData.get(objectIndex).getFeature1(),
+					Math.max(testData.get(objectIndex).getFeature2() - trainData.get(j).getFeature2(), 
+					Math.max(testData.get(objectIndex).getFeature3() - trainData.get(j).getFeature3(), 
+					Math.max(testData.get(objectIndex).getFeature4() - trainData.get(j).getFeature4(),testData.get(objectIndex).getFeature5() - trainData.get(j).getFeature5())))));
 						tmpChebyshev.add(new DistanceMetric(cDistance, trainData.get(j).getImageId()));
 		}
 
@@ -109,7 +116,8 @@ public class Knn {
 				tDistance = Math.abs(testData.get(objectIndex).getFeature1() - trainData.get(j).getFeature1())
 						+ Math.abs(testData.get(objectIndex).getFeature2() - trainData.get(j).getFeature2())
 						+ Math.abs(testData.get(objectIndex).getFeature3() - trainData.get(j).getFeature3())
-						+ Math.abs(testData.get(objectIndex).getFeature4() - trainData.get(j).getFeature4()) ;
+						+ Math.abs(testData.get(objectIndex).getFeature4() - trainData.get(j).getFeature4())
+						+ Math.abs(testData.get(objectIndex).getFeature5() - trainData.get(j).getFeature5());
 				tmpTaxi.add(new DistanceMetric(tDistance, trainData.get(j).getImageId()));
 			}
 			findNNearestNeighbours(numberOfNeighbours, tmpTaxi);

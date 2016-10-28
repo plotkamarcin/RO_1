@@ -18,6 +18,8 @@ private double feature1;
 private double feature2;
 private double feature3;
 private double feature4;
+private double feature5;
+
 
 private transient int[] imageTable;
 
@@ -68,7 +70,13 @@ public double getFeature4() {
 public void setFeature4(double feature4) {
 	this.feature4 = feature4;
 }
+public double getFeature5() {
+	return feature5;
+}
 
+public void setFeature5(double feature5) {
+	this.feature5 = feature5;
+}
 Image(int[] image, int size, int label){
 	imageTable= new int[size*size];
 	imageTable=image;
@@ -173,6 +181,31 @@ public double calculateFourthFeature(){
 	return m30-3*m20*(m10/m00)+2*m10*Math.pow((m10/m00), 2.0);
 }
 
+public double calculateFifthFeature(){
+	//kraglosc obiektu - roundness
+	double area=0.0;
+	for(int i=0;i<imageTable.length;i++){
+		if(imageTable[i]>0){
+			area++;
+		}
+	}
+	
+	double perimeter =0.0;
+	for(int i=1;i<10;i++){
+		for(int j=1;j<27;j++){
+			if(imageTable[28*i+j]+1!=0 || 
+					imageTable[28*i+j]-1!=0 || 
+					imageTable[28*i+j]+28!=0||
+					imageTable[28*i+j]-28!=0){
+				perimeter++;
+			}
+		}	
+	}
+	double roundness = 4*Math.PI*(area/Math.pow(perimeter, 2.0));
+	return roundness;
+	
+}
+
 protected double calculateMomentum(int p, int q, double[] tab){
 	double sum=0.0;
 	for(int i=0;i<28;i++){
@@ -184,5 +217,8 @@ protected double calculateMomentum(int p, int q, double[] tab){
 }
 protected double normalize(double value){
 	return (value-0)/255.0;
+}
+protected double normalize(double value, double min, double max){
+	return (value - min)/(max-min);
 }
 }

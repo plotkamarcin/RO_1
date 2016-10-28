@@ -28,7 +28,7 @@ public static void main(String[] args) {
 //        processor2.calculateFeatures();
 //        Output testDigits = new Output();
 //        testDigits.saveToFile("test_image_data.ser",processor2.getImages());
-        
+//        
         StarLoader starTrainSet = new StarLoader();
         starTrainSet.loadSet("E:\\ro\\STaR_database\\train\\");
         FeatureProcessor starProcessor = new FeatureProcessor(starTrainSet);
@@ -80,9 +80,31 @@ public static void main(String[] args) {
         temp2=harris2.process();
         int diff[]=new int[256*256];
         int diff2[] = new int[256*256];
+        
         for(int i=0;i<diff.length;i++ ){
-        	diff[i]=temp2[i]+5*result1[i];
+        	diff[i]=temp2[i]+5*result1[i]; 	
         }
+        
+        int maxValue=diff[0];
+        int minValue=diff[0];
+        
+        for (int i=0;i<diff.length;i++){
+        	if(diff[i]>maxValue){
+        		maxValue=diff[i];
+        	}
+        	if(diff[i]<minValue){
+        		minValue=diff[i];
+        	}
+        }
+        for (int i=0;i<diff.length;i++){
+        	if(diff[i]<1.57*maxValue){
+        		diff[i]=-16777216;
+        	}
+        	else{
+        		diff[i]=-1;
+        	}
+        }
+        
         for(int i=0;i<diff.length;i++ ){
         	diff2[i]=temp2[i]+100*result2[i];
         }

@@ -2,6 +2,9 @@ package extractor;
 
 import java.io.Serializable;
 
+import featrueExtractors.HarrisEdgeExtractor;
+import featrueExtractors.SobelEdgeExtractor;
+
 public class StarImage extends Image implements Serializable{
 
 	private static final long serialVersionUID = -1314368100390599483L;
@@ -11,11 +14,80 @@ public class StarImage extends Image implements Serializable{
 	}
     @Override
 	public double calculateFirstFeature(){
-       return 0.0;
+    	//sobel edge detector
+    	SobelEdgeExtractor sobel = new SobelEdgeExtractor();
+    	int temp[] = new int[256*256];
+    	temp = getImageTable();
+    	sobel.init(temp, 256, 256);
+    	int result[]=sobel.process();
+    	result=sobel.threshold(result, 50);
+    	double[] tmp = new double[256*256];
+    	for(int i=0;i<result.length;i++){
+    	tmp[i] = normalize(result[i], -16777216, -1);	
+    	}
+    	double area=0.0;
+    	for(int i=0;i<tmp.length;i++){
+    		if(tmp[i]>0){
+    			area++;
+    		}
+    	}
+    	
+       return area;
 	}
     @Override
 	public double calculateSecondFeature(){
-		return 0.0;
+    	//harris corner detection
+    	
+    	double maxValue=0.0;
+    	double minValue=0.0;
+    	
+    	HarrisEdgeExtractor harris = new HarrisEdgeExtractor();
+    	int temp[] = new int[256*256];
+    	int temp2[] = new int[256*256];
+    	temp = getImageTable();
+    	harris.init(temp, 256, 256, 0.10);
+    	 int result[]=harris.process();
+    	 HarrisEdgeExtractor harris2 = new HarrisEdgeExtractor();
+         harris2.init(temp, 256, 256, 1.10);        
+         temp2=harris2.process();
+         int diff[]=new int[256*256];
+         double diff2[] = new double[256*256];
+         for(int i=0;i<diff.length;i++ ){
+         	diff[i]=temp2[i]+5*result[i];
+         }
+         maxValue=minValue=diff[0];
+                 
+         for (int i=0;i<diff.length;i++){
+         	if(diff[i]>maxValue){
+         		maxValue=diff[i];
+         	}
+         	if(diff[i]<minValue){
+         		minValue=diff[i];
+         	}
+         }
+         for (int i=0;i<diff.length;i++){
+         	if(diff[i]<1.57*maxValue){
+         		diff[i]=(int)-16777216;
+         	}
+        	else{
+        		diff[i]=-1;
+        	}
+         }
+         for(int i=0;i<diff.length;i++){
+     		diff2[i]= normalize(diff[i],-16777216,-1);
+     	}
+         double perimeter =0.0;
+     	for(int i=1;i<10;i++){
+     		for(int j=1;j<27;j++){
+     			if(diff2[28*i+j]+1!=0 || 
+     					diff2[28*i+j]-1!=0 || 
+     							diff2[28*i+j]+28!=0||
+     									diff2[28*i+j]-28!=0){
+     				perimeter++;
+     			}
+     		}	
+     	}
+		return perimeter;
 	}
     @Override
 	public double calculateThirdFeature(){

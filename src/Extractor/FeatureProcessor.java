@@ -66,6 +66,7 @@ public class FeatureProcessor {
 			i.setFeature2(i.calculateSecondFeature());
 			i.setFeature3(i.calculateThirdFeature());
 			i.setFeature4(i.calculateFourthFeature());
+			i.setFeature5(i.calculateFifthFeature());
 		}		
 	}
 	public void calculateStarFeatures(){
