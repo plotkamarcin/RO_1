@@ -9,9 +9,11 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 
+import extractor.Extractable;
 import extractor.Image;
+import extractor.StarImage;
 
-public class Knn {
+public class Knn<T> {
 
 	private class Result {
 		private int originalLabel;
@@ -39,22 +41,21 @@ public class Knn {
 		}
 	}
 
-	private ArrayList<Image> testData;
-	private ArrayList<Image> trainData;
+	private ArrayList<Extractable> testData;
+	private ArrayList<Extractable> trainData;
 	private ArrayList<Result> finalResults;
 
 	private String[] tempResults;
 
 	private int[][] confusionMatrix;
 
-	public Knn(ArrayList<Image> test, ArrayList<Image> train) {
+	public Knn(ArrayList<Extractable> test, ArrayList<Extractable> train) {
 		this.testData = test;
 		this.trainData = train;
 		this.finalResults = new ArrayList<Result>();
 	}
 
-	public void calculateEuclideanDistances(int objectIndex, int numberOfNeighbours) {
-
+	public void calculateEuclideanDistances(int objectIndex, int numberOfNeighbours){
 		ArrayList<DistanceMetric> tmpEuclid = new ArrayList<>();
 		double eDistance = 0.0;
 		for (int j = 0; j < trainData.size(); j++) {
@@ -70,6 +71,7 @@ public class Knn {
 
 		findNNearestNeighbours(numberOfNeighbours, tmpEuclid);
 		findDominantClass(objectIndex);
+
 	}
 
 	public void calculateMinkovskyDistances(int objectIndex, int numberOfNeighbours) {

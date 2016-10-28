@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
+import extractor.Extractable;
 import extractor.Image;
 
 public class Loader {
@@ -14,13 +15,13 @@ public class Loader {
 		
 	}
 	
-	public <T> ArrayList<T> loadData(String name){
+	public ArrayList<Extractable> loadData(String name){
 	
-		ArrayList<T>images=null;
+		ArrayList<Extractable>images=null;
 		 try {
 	         FileInputStream fileIn = new FileInputStream(name);
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
-	         images = (ArrayList<T>) in.readObject();
+	         images = (ArrayList<Extractable>) in.readObject();
 	         in.close();
 	         fileIn.close();
 	         System.out.println("Image Data Loaded from "+name);

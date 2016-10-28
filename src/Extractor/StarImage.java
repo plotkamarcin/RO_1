@@ -5,7 +5,7 @@ import java.io.Serializable;
 import featrueExtractors.HarrisEdgeExtractor;
 import featrueExtractors.SobelEdgeExtractor;
 
-public class StarImage extends Image implements Serializable{
+public class StarImage extends Image implements Serializable,Extractable{
 
 	private static final long serialVersionUID = -1314368100390599483L;
 	
@@ -131,5 +131,10 @@ public class StarImage extends Image implements Serializable{
 		return (Math.pow(M30+3*M12, 2.0)+Math.pow(3*M21-M03, 2.0))/Math.pow(m00, 5.0);
 		
     }
+	@Override
+	public double getFeature5() {
+		return 0.0;
+	}
+    
 
 }

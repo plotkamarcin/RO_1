@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class Image implements Serializable {
+public class Image implements Serializable,Extractable {
 	
 	private static final long serialVersionUID = 4623746839237756244L;
 	
@@ -30,7 +30,7 @@ public int[] getImageTable() {
 public void setImageTable(int[] imageTable) {
 	this.imageTable = imageTable;
 }
-
+@Override
 public int getImageId() {
 	return imageId;
 }
@@ -38,7 +38,7 @@ public int getImageId() {
 public void setImageId(int imageId) {
 	this.imageId = imageId;
 }
-
+@Override
 public double getFeature1() {
 	return feature1;
 }
@@ -46,7 +46,7 @@ public double getFeature1() {
 public void setFeature1(double feature1) {
 	this.feature1 = feature1;
 }
-
+@Override
 public double getFeature2() {
 	return feature2;
 }
@@ -54,7 +54,7 @@ public double getFeature2() {
 public void setFeature2(double feature2) {
 	this.feature2 = feature2;
 }
-
+@Override
 public double getFeature3() {
 	return feature3;
 }
@@ -62,7 +62,7 @@ public double getFeature3() {
 public void setFeature3(double feature3) {
 	this.feature3 = feature3;
 }
-
+@Override
 public double getFeature4() {
 	return feature4;
 }
@@ -70,6 +70,7 @@ public double getFeature4() {
 public void setFeature4(double feature4) {
 	this.feature4 = feature4;
 }
+@Override
 public double getFeature5() {
 	return feature5;
 }

@@ -55,7 +55,12 @@ public class FeatureProcessor {
 			for(int i=0;i<pixels.length;i++){
 				tmp[i]=pixels[i]&0xff;
 			}
+			if(loader.getImages().size()==250){
 			starImages.add(new StarImage(tmp,256,index/25));
+			}
+			else{
+			starImages.add(new StarImage(tmp,256,index/5));
+			}
 			index++;
 		}
 
